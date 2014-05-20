@@ -86,6 +86,12 @@ class Article < ActiveRecord::Base
   has_many :notes, :as => :notable
 end
 
+class Recommendation < ActiveRecord::Base
+  belongs_to :person
+  belongs_to :target_person, class_name: 'Person'
+  belongs_to :article
+end
+
 module Namespace
   class Article < ::Article
 
@@ -153,6 +159,12 @@ module Schema
         t.integer :notable_id
         t.string :notable_type
         t.string :note
+      end
+
+      create_table :recommendations, :force => true do |t|
+        t.integer :person_id
+        t.integer  :target_person_id
+        t.integer    :article_id
       end
 
     end
